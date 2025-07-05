@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262196889156",
+    "project_id": "smartbell-fd4db",
+    "storage_bucket": "smartbell-fd4db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262196889156:android:19f84e626df855ea475e11",
+        "android_client_info": {
+          "package_name": "com.gymbro.smartbell"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtanRYS4vDtICyU5DM17C0hGVU-wTD1zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
