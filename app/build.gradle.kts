@@ -68,4 +68,10 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("com.google.firebase:firebase-firestore-ktx")
 }
