@@ -1,7 +1,9 @@
 package com.gymbro.smartbell
 
 import AuthViewModel
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -57,6 +61,7 @@ fun AuthScreen(viewModel: AuthViewModel = viewModel()) {
     var isLogin by remember { mutableStateOf(true) }
 
     val state by viewModel.authState.collectAsState()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -141,8 +146,15 @@ fun AuthScreen(viewModel: AuthViewModel = viewModel()) {
 
         when (state) {
             is AuthState.Loading -> CircularProgressIndicator()
-            is AuthState.Error -> Text("Error: ${(state as AuthState.Error).message}")
-            is AuthState.Success -> Text("Logged in!")
+            is AuthState.Error -> Toast.makeText(context, "Error: " +
+                    "${(state as AuthState.Error).message}", Toast.LENGTH_SHORT).show()
+            is AuthState.Success -> {
+                LaunchedEffect(Unit) {
+                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
+                    context.startActivity(Intent(context, HomeActivity::class.java))
+                }
+            }
+
             else -> {}
         }
     }
