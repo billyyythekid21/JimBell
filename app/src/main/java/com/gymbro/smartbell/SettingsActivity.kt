@@ -2,6 +2,7 @@ package com.gymbro.smartbell
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Switch
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -91,12 +92,34 @@ fun SettingsScreen(innerPadding: PaddingValues) {
             thickness = 2.dp
         )
 
-        SettingOption(title = "Dark Mode", description = "Enable dark theme") {
-            var switchCheckedState by remember { mutableStateOf(false) }
-            Switch(
-                checked = switchCheckedState,
-                onCheckedChange = { switchCheckedState = it }
-            )
+        SettingOption(title = "Theme", description = "Choose Light, Dark, or System") {
+            var selectedOption by remember { mutableStateOf("System") }
+            val options = listOf("Light", "Dark", "System")
+
+            Column(horizontalAlignment = Alignment.End) {
+                options.forEach { option ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    ) {
+                        RadioButton(
+                            selected = selectedOption == option,
+                            onClick = {
+                                selectedOption = option
+                                when (option) {
+                                    "Light" -> AppCompatDelegate.setDefaultNightMode(
+                                        AppCompatDelegate.MODE_NIGHT_NO)
+                                    "Dark" -> AppCompatDelegate.setDefaultNightMode(
+                                        AppCompatDelegate.MODE_NIGHT_YES)
+                                    "System Default" -> AppCompatDelegate.setDefaultNightMode(
+                                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                }
+                            }
+                        )
+                        Text(text = option, modifier = Modifier.padding(start = 4.dp))
+                    }
+                }
+            }
         }
     }
 }
