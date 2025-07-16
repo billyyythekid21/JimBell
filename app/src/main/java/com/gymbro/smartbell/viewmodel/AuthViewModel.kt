@@ -11,8 +11,7 @@ class AuthViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     val authState: StateFlow<AuthState> = _authState
 
-    fun register(email: String, password: String, name: String, age: Int, weight: Int,
-                 height: Int) {
+    fun register(email: String, password: String) {
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -20,14 +19,10 @@ class AuthViewModel : ViewModel() {
                     val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
                     val userMap = mapOf(
                         "email" to email,
-                        "name" to name,
-                        "age" to age,
-                        "weight" to weight,
-                        "height" to height
                     )
                     db.collection("users").document(uid).set(userMap)
                         .addOnSuccessListener {
-                            _authState.value = AuthState.Success
+                            _authState.value = AuthState.NewUser()
                         }
                         .addOnFailureListener {
                             _authState.value = AuthState.Error("User created but failed to save profile")
@@ -57,5 +52,6 @@ sealed class AuthState {
     object Idle : AuthState()
     object Loading : AuthState()
     object Success : AuthState()
+    object NewUser : AuthState()
     data class Error(val message: String?) : AuthState()
 }
