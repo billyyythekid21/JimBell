@@ -1,6 +1,5 @@
 package com.gymbro.smartbell
 
-import AuthViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -34,7 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.FirebaseApp
+import com.gymbro.smartbell.viewmodel.AuthState
 import com.gymbro.smartbell.viewmodel.ProfileSetupActivity
+import com.gymbro.smartbell.viewmodel.AuthViewModel
 
 class AuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

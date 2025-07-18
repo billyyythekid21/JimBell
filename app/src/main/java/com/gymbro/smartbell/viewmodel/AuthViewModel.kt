@@ -1,3 +1,5 @@
+package com.gymbro.smartbell.viewmodel
+
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +24,7 @@ class AuthViewModel : ViewModel() {
                     )
                     db.collection("users").document(uid).set(userMap)
                         .addOnSuccessListener {
-                            _authState.value = AuthState.NewUser()
+                            _authState.value = AuthState.NewUser
                         }
                         .addOnFailureListener {
                             _authState.value = AuthState.Error("User created but failed to save profile")
