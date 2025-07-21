@@ -87,7 +87,6 @@ fun ProfileSetupScreen() {
                     .padding(innerPadding)
                     .padding(16.dp)
             ) {
-                // Profile image and upload button
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
