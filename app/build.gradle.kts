@@ -78,6 +78,4 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     val nav_version = "2.9.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("io.coil-kt:coil-compose:3.3.0")
-    implementation("io.coil-kt:coil-network-okhttp:3.3.0")
 }
