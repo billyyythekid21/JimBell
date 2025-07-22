@@ -1,6 +1,10 @@
 package com.gymbro.smartbell.viewmodel
 
-import coil.compose.rememberAsyncImagePainter
+import android.content.Context
+import android.graphics.BitmapFactory
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -72,6 +76,8 @@ fun ProfileSetupScreen() {
         selectedImageUri = uri
     }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -99,9 +105,10 @@ fun ProfileSetupScreen() {
                             .clip(CircleShape)
                             .border(2.dp, Color.Gray, CircleShape)
                     ) {
-                        if (selectedImageUri != null) {
+                        val bitmap = rememberAsyncBitmapFromUri(context, selectedImageUri)
+                        if (bitmap != null) {
                             Image(
-                                painter = rememberAsyncImagePainter(selectedImageUri),
+                                bitmap = bitmap,
                                 contentDescription = "Profile Picture",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
@@ -195,4 +202,21 @@ fun ProfileSetupScreen() {
             }
         }
     }
+}
+
+@Composable
+fun rememberAsyncBitmapFromUri(context: Context, uri: Uri?): ImageBitmap? {
+    var bitmap by remember(uri) { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(uri) {
+        uri?.let {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            inputStream?.use {
+                val bmp = BitmapFactory.decodeStream(it)
+                bitmap = bmp?.asImageBitmap()
+            }
+        }
+    }
+
+    return bitmap
 }
