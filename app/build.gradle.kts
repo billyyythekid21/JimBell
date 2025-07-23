@@ -75,7 +75,9 @@ dependencies {
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.firebase:firebase-bom:32.7.0")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
     val nav_version = "2.9.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 }
