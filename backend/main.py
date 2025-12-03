@@ -50,7 +50,7 @@ def login(request: LoginRequest):
     for user in users:
         if user.username == request.username:
             if pwd_context.verify(request.password, user.password):
-                return {"message": f"Login successful for {u.username}"}
+                return {"message": f"Login successful for {user.username}"}
             else:
                 raise HTTPException(status_code=401, detail="ERROR: Invalid " \
                 "password")
