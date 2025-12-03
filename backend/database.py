@@ -1,8 +1,19 @@
-import sqlalchemy as db
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-engine = db.create_engine("sqlite:///./jimbell.db")
+sqlite_file_name = "jimbell.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
 
-conn = engine.connect()
+connect_args = {"check_same_thread": False}
+engine = create_engine(sqlite_url, connect_args=connect_args)
 
-metadata = db.MetaData()
-division =
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
