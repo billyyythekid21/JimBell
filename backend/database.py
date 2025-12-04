@@ -1,5 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from database import engine, Base
+
+Base.metadata.create_all(bind=engine)
 
 sqlite_file_name = "jimbell.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
